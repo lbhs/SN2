@@ -133,7 +133,7 @@ public class TutorialElectrophileScript : MonoBehaviour  //attached to the Tutor
         GetComponent<Rigidbody>().velocity = Vector2.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-        StartCoroutine(CountdownToRestartRotation(1));
+        StartCoroutine(CountdownToRestartRotation(2.5f));
     }
 
     public void StopRotationCaseTwo()  //this function will check to see if the rotation has been frozen at an acceptable angle to allow reactions
@@ -155,16 +155,17 @@ public class TutorialElectrophileScript : MonoBehaviour  //attached to the Tutor
             GoodRotationLock.Play();
             print("activate the Energize Button");
             EnergizeButton.interactable = true;
-            StartCoroutine(CountdownToRestartRotation(FreezeTimeLimit));
-            TutorialSpeechBubble.GetComponent<TutorialScript>().SendGoodAngleMessage();
+            
+            TutorialSpeechBubble.GetComponent<TutorialScript>().SendGoodAngleMessage();        
         }
 
         else
         {
             BadRotationLock.Play();
-            StartCoroutine(CountdownToRestartRotation(6));
+            StartCoroutine(CountdownToRestartRotation(2.5f));
             print("send bad angle message here");
             TutorialSpeechBubble.GetComponent<TutorialScript>().SendBadAngleMessage();
+
         }
 
         //AngularVelocityVector = GetComponent<Rigidbody>().angularVelocity;  //"record" the current rotation of the ElectrophileMolecule
@@ -187,6 +188,8 @@ public class TutorialElectrophileScript : MonoBehaviour  //attached to the Tutor
         if (GameObject.Find("EnergizeButton"))
         {
             EnergizeButton.interactable = false;
+            MoleculeInstantiationManager.GetComponent<EnergizeSoundScript>().StopEnergizeSounds();
+            GameObject.FindGameObjectWithTag("Nucleophile").GetComponent<ChlorideMovementControlScript>().ChlorideY_Velocity = 4;
         }
     }
 
@@ -201,5 +204,7 @@ public class TutorialElectrophileScript : MonoBehaviour  //attached to the Tutor
         yield return new WaitForSeconds(FreezeTimeLimit);
         RestartRotation();
     }
+
+    
 
 }

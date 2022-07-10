@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class TutorialScript : MonoBehaviour
+public class TutorialScript : MonoBehaviour  //Attached to TutorialSpeechBubble
 {
     public Button AdvanceTutorialButton;
     public GameObject TutorialSpeechBubble;  //move this offscreen when appropriate
@@ -106,12 +106,16 @@ public class TutorialScript : MonoBehaviour
             EnergizeButton.SetActive(false);
             EnergizeButton.GetComponent<Button>().interactable = false;
             ElectrophileMolecule.SetActive(true);
-            ElectrophileMoleculeIDText.SetActive(true);
+            
             //ElectrophileMolecule.GetComponent<RotatingElectrophileScript>().StopRotation();  //if Tutorial is active, rotation is not initiated in the Start Function of RotatingElectrophileScript
         }
 
 
-        //Message 9 = The target molecule is called an Electrophile.  
+        //Message 9 = The target molecule is called an Electrophile. 
+        if (MessageNumber == 9)
+        {
+            ElectrophileMoleculeIDText.SetActive(true);
+        }
 
         //Message 10 = The electrophile molecule will move automatically across the screen
         if (MessageNumber == 10)
@@ -226,11 +230,16 @@ public class TutorialScript : MonoBehaviour
 
             MoleculeInstantiationManager.GetComponent<MoleculeToInstantiateScript>().InstantiateNucleophile();
             MoleculeInstantiationManager.GetComponent<MoleculeToInstantiateScript>().InstantiateNewElectrophileMolecule();
-
         }
 
-        //Message 20 = Tutorial Complete, press Return To Main Menu Button
-        if (MessageNumber == 20)
+        //Message 20 = Energize and Fire your Nucleophile at the Electrophile!!
+        if (MessageNumber == 21)
+        {
+            AdvanceTutorialButton.interactable = true;
+        }
+
+            //Message 21 = Tutorial Complete, press Return To Main Menu Button
+            if (MessageNumber == 21)
         {
             
             LockRotationButton.SetActive(false);
@@ -252,19 +261,26 @@ public class TutorialScript : MonoBehaviour
 
     public void SendGoodAngleMessage()
     {
-        TutorialTextBox.text = "The Red Spot is pointing Down!  Fire your nucleophile!!";
-        StartCoroutine (CountdownToEraseMessage(5));
+        TutorialTextBox.text = "The Red Spot is pointing Down!  You can ENERGIZE because rotation is locked in the correct position.";
+        StartCoroutine(CountdownToAdvanceTutorial(4f)); 
     }
 
     public void SendBadAngleMessage()
     {
-        TutorialTextBox.text = "The red spot isn't pointing down--unlock rotation and try again.";
-        StartCoroutine(CountdownToEraseMessage(3));
+        TutorialTextBox.text = "The red spot isn't pointing down.  You cannot energize until you lock rotation in the correct position.";
+        StartCoroutine(CountdownToEraseMessage(4));
     }
 
     public IEnumerator CountdownToEraseMessage(int WaitTime)
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(WaitTime);
         TutorialTextBox.text = null;
+    }
+
+    public IEnumerator CountdownToAdvanceTutorial(float WaitTime)
+    {
+        print("countdown to advance tutorial");
+        yield return new WaitForSeconds(WaitTime);
+        TutorialSpeechBubble.GetComponent<TutorialScript>().AdvanceTutorial();
     }
 }

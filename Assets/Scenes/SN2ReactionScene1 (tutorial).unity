@@ -304,6 +304,9 @@ MonoBehaviour:
   GameOverText: {fileID: 0}
   GameOverTextBox: {fileID: 0}
   ButtonToLoadGameOverScene: {fileID: 0}
+  MoleculeInstantiationManager: {fileID: 0}
+  Cube1: {fileID: 0}
+  Cube2: {fileID: 0}
   TimerStartValue: 60
   StartTimer: 0
 --- !u!114 &211051768
@@ -2157,6 +2160,7 @@ MonoBehaviour:
   NumberOfCubes: 0
   CubeSpeed: 15
   MaxTorque: 4
+  DifficultyLevel: 0
 --- !u!1001 &1170536767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2602,9 +2606,9 @@ MonoBehaviour:
   - 25 points is the maximum score for each reaction
   - In the real game, there is a countdown timer
   - Try to freeze the Electrophile's Rotation so that the Red Spot faces down
+  - Energize and Fire your Nucleophile at the Red Spot on the Electrophile!
   - Congratulations--you have completed this Tutorial! Press the Return to Main Menu
     Button to play a real game
-  - 
 --- !u!114 &1344358816
 MonoBehaviour:
   m_ObjectHideFlags: 0

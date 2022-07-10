@@ -190,7 +190,7 @@ public class ChlorideMovementControlScript : MonoBehaviour  //Attached to the Ch
         if (Input.GetKey("up"))
         {
             //CHECK HERE TO SEE WHETHER ENERGIZING IS ALLOWED--will be disallowed if rotation is frozen at a bad angle 
-            if (EnergizeButton != null && EnergizeButton.interactable)
+            if (EnergizeButton != null && EnergizeButton.interactable && !NucleophileInFlight)
             {
                 EnergizeNucleophile();
             }
@@ -226,7 +226,8 @@ public class ChlorideMovementControlScript : MonoBehaviour  //Attached to the Ch
         //print("Countdown to Destruction of nucleophile");
         yield return new WaitForSeconds(delayTime);
         Destroy(gameObject);  //this is the nucleophile atom
-        
+
+        MoleculeInstantiationManager.GetComponent<EnergizeSoundScript>().StopEnergizeSounds();
         MoleculeInstantiationManager.GetComponent<MoleculeToInstantiateScript>().InstantiateNucleophile();
     }
 }

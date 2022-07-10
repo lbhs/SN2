@@ -46,7 +46,10 @@ public class EnergizeAndFireNucleophileScript : MonoBehaviour  //attached to the
             //needed to move this function to Update for it to repeatedly perform the EnergizeNucleophile function that adds velocity to the Nucleophile
             if (GameObject.FindGameObjectWithTag("Nucleophile"))
             {
-                GameObject.FindGameObjectWithTag("Nucleophile").GetComponent<ChlorideMovementControlScript>().EnergizeNucleophile();
+                if (!GameObject.FindGameObjectWithTag("Nucleophile").GetComponent<ChlorideMovementControlScript>().NucleophileInFlight)
+                {
+                    GameObject.FindGameObjectWithTag("Nucleophile").GetComponent<ChlorideMovementControlScript>().EnergizeNucleophile();
+                }                
             }
         }
     }
@@ -57,7 +60,13 @@ public class EnergizeAndFireNucleophileScript : MonoBehaviour  //attached to the
         {
             EnergizeButtonIsPressed = true;
 
-            GameObject.FindGameObjectWithTag("Nucleophile").GetComponent<ChlorideMovementControlScript>().EnergizeNucleophile();
+            if (GameObject.FindGameObjectWithTag("Nucleophile"))
+            {
+                if (!GameObject.FindGameObjectWithTag("Nucleophile").GetComponent<ChlorideMovementControlScript>().NucleophileInFlight)
+                {
+                    GameObject.FindGameObjectWithTag("Nucleophile").GetComponent<ChlorideMovementControlScript>().EnergizeNucleophile();
+                }
+            }
         }
         
     }
