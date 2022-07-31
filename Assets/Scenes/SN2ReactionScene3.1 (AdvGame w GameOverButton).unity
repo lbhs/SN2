@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AngleToleranceValue: 0.15
-  TimeLimitForFreezingRotation: 4
+  TimeLimitForFreezingRotation: 5
   ActivationEnergyThresholdForThisScene: 9
   DifficultyMultiplierForScoring: 80
   UseMovingCubes: 0
