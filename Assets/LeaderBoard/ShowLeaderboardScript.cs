@@ -4,15 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using SimpleJSON;
-#pragma warning disable CS0618 // Type or member is obsolete
-public class Player
-{
-    public string Name;
-    public int Score;
-}
 
-public class UpdateLeaderboard : MonoBehaviour
+
+//public class Player
+//{
+//    public string Name;
+//    public int Score;
+//}
+
+public class ShowLeaderboardScript : MonoBehaviour
 {
+   
     public List<Player> players = new List<Player>();
     public GameObject[] textBoxes;
 
@@ -29,6 +31,7 @@ public class UpdateLeaderboard : MonoBehaviour
         //string url = "https://sheets.googleapis.com/v4/spreadsheets/163XTG4mOdzoAZv-HHcKGoRtDum-XvTOsajDYoiO97VA/values/Leaderboard!" + "B2" + ":" + "C1001" + "?key=" + SecretKey.GSkey;
         string url = "https://sheets.googleapis.com/v4/spreadsheets/1zbJyB3-Hj_7Qcjj1p8HkNCgQbSBLMBaHfhJiUu1DYgM/values/Leaderboard!" + "B2" + ":" + "C1001" + "?key=" + SecretKey.GSkey;
         WWW www = new WWW(url);
+        
         yield return www;
         string RecivedJSON;
         RecivedJSON = www.text;
@@ -45,37 +48,12 @@ public class UpdateLeaderboard : MonoBehaviour
                 p.Score = int.Parse(s);
                 players.Add(p);
             }
-            print(p.Name);  //DEBUGGING PURPOSES ONLY 
+            print (p.Name);
         }
         players = players.OrderByDescending(i => i.Score).ToList();
         applyUpdates();
 
-        /*string url1 = "https://sheets.googleapis.com/v4/spreadsheets/163XTG4mOdzoAZv-HHcKGoRtDum-XvTOsajDYoiO97VA/values/Leaderboard!B" + row + ":B" + row + "?key=" + SecretKey.GSkey;
-        WWW www = new WWW(url1);
-        yield return www;
-        RecivedJSON = www.text;
-        var J = JSON.Parse(RecivedJSON);
-        string name = J["values"][0][0].Value;
-
-        string url2 = "https://sheets.googleapis.com/v4/spreadsheets/163XTG4mOdzoAZv-HHcKGoRtDum-XvTOsajDYoiO97VA/values/Leaderboard!C" + row + ":C" + row + "?key=" + SecretKey.GSkey;
-        WWW www2 = new WWW(url2);
-        yield return www2;
-        RecivedJSON = www2.text;
-        var J2 = JSON.Parse(RecivedJSON);
-        string score = J2["values"][0][0].Value;
-
-        if (name == null || score == null)
-        {
-            var p = new Player();
-            p.Name = name;
-            p.Score = int.Parse(score);
-            players.Add(p);
-            Debug.Log(p.Name + " " + p.Score);
-        }
-        else
-        {
-            print("found empty cell");
-        }*/
+        
     }
 
     void applyUpdates()
@@ -107,4 +85,3 @@ public class UpdateLeaderboard : MonoBehaviour
         }
     }
 }
-#pragma warning restore CS0618 // Type or member is obsolete

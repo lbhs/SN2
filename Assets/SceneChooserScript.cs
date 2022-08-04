@@ -8,11 +8,12 @@ using UnityEngine.SceneManagement;
 public class SceneChooserScript : MonoBehaviour
 {
     public TMP_Dropdown SceneChooserDropdown;
+    public GameObject LeaderboardPanel;
 
     // Start is called before the first frame update
     void Start()
     {
-        print(SceneChooserDropdown.value);
+        //print(SceneChooserDropdown.value);
     }
 
     // Update is called once per frame
@@ -23,9 +24,17 @@ public class SceneChooserScript : MonoBehaviour
 
     public void ChooseSceneFromDropdown()
     {
-        Time.timeScale = 1;
-        ScoringScript.Score = 0;
-        SceneManager.LoadScene(SceneChooserDropdown.value);
+        if(SceneChooserDropdown.value == 4)  //this is the "Show Leadeboard" choice
+        {
+            LeaderboardPanel.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            ScoringScript.Score = 0;
+            SceneManager.LoadScene(SceneChooserDropdown.value);
+        }
+        
     }
 
 }
